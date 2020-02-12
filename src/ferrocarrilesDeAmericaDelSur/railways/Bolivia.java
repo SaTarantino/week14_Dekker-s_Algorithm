@@ -49,15 +49,77 @@ public class Bolivia extends Railway {
 //		}
 //	}
 
+	/**
+	 * Attempt 3
+	 * @throws RailwaySystemError
+	 */
+//	public void runTrain() throws RailwaySystemError {
+//		Clock clock = getRailwaySystem().getClock();
+//		Railway nextRailway = getRailwaySystem().getNextRailway(this);
+//		while (!clock.timeOut()) {
+//			choochoo();
+//			while (nextRailway.getBasket().hasStone()) {
+//				siesta();
+//			}
+//			getBasket().putStone();
+//			crossPass();
+//			getBasket().takeStone();
+//		}
+//	}
+
+	/**
+	 * Attempt 4.
+	 * @throws RailwaySystemError
+	 */
+//	public void runTrain() throws RailwaySystemError {
+//		Clock clock = getRailwaySystem().getClock();
+//		Railway nextRailway = getRailwaySystem().getNextRailway(this);
+//		while (!clock.timeOut()) {
+//			choochoo();
+//			getBasket().putStone();
+//			while (nextRailway.getBasket().hasStone()) {
+//				siesta();
+//			}
+//			crossPass();
+//			getBasket().takeStone();
+//		}
+//	}
+
+	/**
+	 * Attempt 5.
+	 * @throws RailwaySystemError
+	 */
+//	public void runTrain() throws RailwaySystemError {
+//		Clock clock = getRailwaySystem().getClock();
+//		Railway nextRailway = getRailwaySystem().getNextRailway(this);
+//		while (!clock.timeOut()) {
+//			choochoo();
+//			getBasket().putStone();
+//			while (nextRailway.getBasket().hasStone()) {
+//				getBasket().takeStone();
+//				siesta();
+//				getBasket().putStone();
+//			}
+//			crossPass();
+//			getBasket().takeStone();
+//		}
+//	}
+
+	/**
+	 * Attempt 6.
+	 * @throws RailwaySystemError
+	 */
 	public void runTrain() throws RailwaySystemError {
 		Clock clock = getRailwaySystem().getClock();
+		Railway nextRailway = getRailwaySystem().getNextRailway(this);
 		while (!clock.timeOut()) {
 			choochoo();
-			while (!getSharedBasket().hasStone()) {
+			getBasket().putStone();
+			while (nextRailway.getBasket().hasStone()) {
 				siesta();
 			}
 			crossPass();
-			getSharedBasket().takeStone();
+			getBasket().takeStone();
 		}
 	}
 }
