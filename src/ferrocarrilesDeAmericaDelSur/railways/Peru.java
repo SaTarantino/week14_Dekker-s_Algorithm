@@ -116,9 +116,16 @@ public class Peru extends Railway {
 			choochoo();
 			getBasket().putStone();
 			while (nextRailway.getBasket().hasStone()) {
-				siesta();
+				if (getSharedBasket().hasStone() == getBasket().hasStone()) {
+					getBasket().takeStone();
+					while (getSharedBasket().hasStone()) { // != getBasket().hasStone()
+						siesta();
+					}
+					getBasket().putStone();
+				}
 			}
 			crossPass();
+			getSharedBasket().putStone();
 			getBasket().takeStone();
 		}
 	}

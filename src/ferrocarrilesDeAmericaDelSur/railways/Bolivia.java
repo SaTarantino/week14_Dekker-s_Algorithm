@@ -92,16 +92,16 @@ public class Bolivia extends Railway {
 //	public void runTrain() throws RailwaySystemError {
 //		Clock clock = getRailwaySystem().getClock();
 //		Railway nextRailway = getRailwaySystem().getNextRailway(this);
-//		while (!clock.timeOut()) {
-//			choochoo();
-//			getBasket().putStone();
-//			while (nextRailway.getBasket().hasStone()) {
-//				getBasket().takeStone();
-//				siesta();
-//				getBasket().putStone();
-//			}
-//			crossPass();
-//			getBasket().takeStone();
+//		while (!clock.timeOut()) {											//while (true);
+//			choochoo();														//non-critical section;
+//			getBasket().putStone();											//procReqCS[id] = true;
+//			while (nextRailway.getBasket().hasStone()) {					//while (procReqCS[(id+1) % 2]) {
+//				getBasket().takeStone();									//	procReqCS[id] = false;
+//				siesta();													//	"WAIT"
+//				getBasket().putStone();										//	procReqCS[id] = true;
+//			}																//}
+//			crossPass();													//critical section;
+//			getBasket().takeStone();										//procReqCS[id] = false;
 //		}
 //	}
 
@@ -116,9 +116,16 @@ public class Bolivia extends Railway {
 			choochoo();
 			getBasket().putStone();
 			while (nextRailway.getBasket().hasStone()) {
-				siesta();
+				if (getSharedBasket().hasStone() == getBasket().hasStone()) {
+					getBasket().takeStone();
+					while (getSharedBasket().hasStone()) {
+						siesta();
+					}
+					getBasket().putStone();
+				}
 			}
 			crossPass();
+			getSharedBasket().putStone();
 			getBasket().takeStone();
 		}
 	}
