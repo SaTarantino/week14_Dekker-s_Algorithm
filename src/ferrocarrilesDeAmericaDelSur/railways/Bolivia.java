@@ -22,7 +22,8 @@ public class Bolivia extends Railway {
     /**
      * Run the train on the railway.
      * This method currently does not provide any synchronisation to avoid two trains being in the pass at the same time.
-     */
+	 * @throws RailwaySystemError
+	 */
 //    public void runTrain() throws RailwaySystemError {
 //    	Clock clock = getRailwaySystem().getClock();
 //    	while (!clock.timeOut()) {
@@ -36,6 +37,7 @@ public class Bolivia extends Railway {
 
 	/**
 	 * Attempt 2. This method do not guarantees mutual exclusion and liveness  (starvation).
+	 * @throws RailwaySystemError
 	 */
 //	public void runTrain() throws RailwaySystemError {
 //		Clock clock = getRailwaySystem().getClock();
@@ -104,7 +106,7 @@ public class Bolivia extends Railway {
 //			getBasket().takeStone();										//procReqCS[id] = false;
 //		}
 //	}
-
+ 
 	/**
 	 * Attempt 6.
 	 * @throws RailwaySystemError
@@ -118,7 +120,7 @@ public class Bolivia extends Railway {
 			while (nextRailway.getBasket().hasStone()) {
 				if (getSharedBasket().hasStone() == getBasket().hasStone()) {
 					getBasket().takeStone();
-					while (getSharedBasket().hasStone()) {
+					while (!getSharedBasket().hasStone()) {
 						siesta();
 					}
 					getBasket().putStone();

@@ -22,7 +22,8 @@ public class Peru extends Railway {
     /**
      * Run the train on the railway.
 	 * This method currently does not provide any synchronisation to avoid two trains being in the pass at the same time.
-     */
+	 * @throws RailwaySystemError
+	 */
 //    public void runTrain() throws RailwaySystemError {
 //    	Clock clock = getRailwaySystem().getClock();
 //    	while (!clock.timeOut()) {
@@ -36,6 +37,7 @@ public class Peru extends Railway {
 
 	/**
 	 * Attempt 2. This method do not guarantees mutual exclusion and liveness  (starvation).
+	 * @throws RailwaySystemError
 	 */
 //	public void runTrain() throws RailwaySystemError {
 //		Clock clock = getRailwaySystem().getClock();
@@ -118,7 +120,7 @@ public class Peru extends Railway {
 			while (nextRailway.getBasket().hasStone()) {
 				if (getSharedBasket().hasStone() == getBasket().hasStone()) {
 					getBasket().takeStone();
-					while (getSharedBasket().hasStone()) { // != getBasket().hasStone()
+					while (!getSharedBasket().hasStone()) { // != getBasket().hasStone()
 						siesta();
 					}
 					getBasket().putStone();
@@ -130,3 +132,24 @@ public class Peru extends Railway {
 		}
 	}
 }
+
+//	public void runTrain() throws RailwaySystemError {
+//		Clock clock = getRailwaySystem().getClock();
+//		Railway nextRailway = getRailwaySystem().getNextRailway(this);
+//		while (!clock.timeOut()) {
+//			choochoo();
+//			getBasket().putStone();
+//			while (nextRailway.getBasket().hasStone()) {
+//				if (getSharedBasket().hasStone()) {
+//					getBasket().takeStone();
+//					while (getSharedBasket().hasStone()) { // != getBasket().hasStone()
+//						siesta();
+//					}
+//					getBasket().putStone();
+//				}
+//			}
+//			crossPass();
+//			getSharedBasket().putStone();
+//			getBasket().takeStone();
+//		}
+//	}
