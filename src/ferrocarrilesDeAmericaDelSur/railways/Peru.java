@@ -141,7 +141,9 @@ public class Peru extends Railway {
 			while (nextRailway.getBasket().hasStone()) {
 				if (!getSharedBasket().hasStone()) {
 					getBasket().takeStone();
-					while (!getSharedBasket().hasStone());
+					while (!getSharedBasket().hasStone()){
+						siesta();
+					}
 					getBasket().putStone();
 				}
 			}
