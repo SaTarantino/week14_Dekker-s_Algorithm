@@ -111,28 +111,6 @@ public class Peru extends Railway {
 	 * Attempt 6.
 	 * @throws RailwaySystemError
 	 */
-	public void runTrain() throws RailwaySystemError {
-		Clock clock = getRailwaySystem().getClock();
-		Railway nextRailway = getRailwaySystem().getNextRailway(this);
-		while (!clock.timeOut()) {
-			choochoo();
-			getBasket().putStone();
-			while (nextRailway.getBasket().hasStone()) {
-				if (getSharedBasket().hasStone() == getBasket().hasStone()) {
-					getBasket().takeStone();
-					while (!getSharedBasket().hasStone()) { // != getBasket().hasStone()
-						siesta();
-					}
-					getBasket().putStone();
-				}
-			}
-			crossPass();
-			getSharedBasket().putStone();
-			getBasket().takeStone();
-		}
-	}
-}
-
 //	public void runTrain() throws RailwaySystemError {
 //		Clock clock = getRailwaySystem().getClock();
 //		Railway nextRailway = getRailwaySystem().getNextRailway(this);
@@ -140,7 +118,7 @@ public class Peru extends Railway {
 //			choochoo();
 //			getBasket().putStone();
 //			while (nextRailway.getBasket().hasStone()) {
-//				if (getSharedBasket().hasStone()) {
+//				if (!getSharedBasket().hasStone()) {
 //					getBasket().takeStone();
 //					while (getSharedBasket().hasStone()) { // != getBasket().hasStone()
 //						siesta();
@@ -153,3 +131,23 @@ public class Peru extends Railway {
 //			getBasket().takeStone();
 //		}
 //	}
+
+	public void runTrain() throws RailwaySystemError {
+		Clock clock = getRailwaySystem().getClock();
+		Railway nextRailway = getRailwaySystem().getNextRailway(this);
+		while (!clock.timeOut()) {
+			choochoo();
+			getBasket().putStone();
+			while (nextRailway.getBasket().hasStone()) {
+				if (!getSharedBasket().hasStone()) {
+					getBasket().takeStone();
+					while (!getSharedBasket().hasStone());
+					getBasket().putStone();
+				}
+			}
+			crossPass();
+			getSharedBasket().takeStone();
+			getBasket().takeStone();
+		}
+	}
+}

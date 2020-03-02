@@ -84,4 +84,8 @@ public class Basket {
 		return basketHasStone();
 	}
 
+	public boolean modStone() throws ProgrammingError {
+
+		return false;
+	}
 }

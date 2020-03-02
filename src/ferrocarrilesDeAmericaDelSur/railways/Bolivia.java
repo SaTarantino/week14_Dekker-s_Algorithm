@@ -118,11 +118,9 @@ public class Bolivia extends Railway {
 			choochoo();
 			getBasket().putStone();
 			while (nextRailway.getBasket().hasStone()) {
-				if (getSharedBasket().hasStone() == getBasket().hasStone()) {
+				if (getSharedBasket().hasStone()) {
 					getBasket().takeStone();
-					while (!getSharedBasket().hasStone()) {
-						siesta();
-					}
+					while (getSharedBasket().hasStone());
 					getBasket().putStone();
 				}
 			}
