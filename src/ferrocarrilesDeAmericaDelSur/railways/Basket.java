@@ -83,9 +83,4 @@ public class Basket {
 		railway.delay();
 		return basketHasStone();
 	}
-
-	public boolean modStone() throws ProgrammingError {
-
-		return false;
-	}
 }
