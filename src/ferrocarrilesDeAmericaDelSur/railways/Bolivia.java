@@ -108,7 +108,7 @@ public class Bolivia extends Railway {
 //	}
  
 	/**
-	 * Attempt 6.
+	 * Attempt 6. Dekker's Algorithm.
 	 * @throws RailwaySystemError
 	 */
 	public void runTrain() throws RailwaySystemError {
@@ -117,10 +117,10 @@ public class Bolivia extends Railway {
 		while (!clock.timeOut()) {
 			choochoo();
 			getBasket().putStone();
-			while (nextRailway.getBasket().hasStone()) {
+			while (nextRailway.getBasket().hasStone()) {		// Attempt 5 wait loop
 				if (getSharedBasket().hasStone()) {
 					getBasket().takeStone();
-					while (getSharedBasket().hasStone()){
+					while (getSharedBasket().hasStone()){		// Attempt 2 wait loop
 						siesta();
 					}
 					getBasket().putStone();
